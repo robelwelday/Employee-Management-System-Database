@@ -87,3 +87,27 @@ BEGIN
 END$$
 DELIMITER ;
 commit;
+CREATE VIEW EmployeeView AS
+SELECT 
+    e.EmployeeID, e.FirstName, e.LastName, e.Email, e.Phone, e.HireDate,
+    d.DepartmentName, r.RoleTitle,
+    s.Amount AS CurrentSalary
+FROM Employees e
+JOIN Departments d ON e.DepartmentID = d.DepartmentID
+JOIN Roles r ON e.RoleID = r.RoleID
+LEFT JOIN Salaries s ON e.EmployeeID = s.EmployeeID AND s.EndDate IS NULL;
+CREATE VIEW DepartmentSummary AS
+SELECT 
+    d.DepartmentID, d.DepartmentName,
+    COUNT(e.EmployeeID) AS EmployeeCount
+FROM Departments d
+LEFT JOIN Employees e ON d.DepartmentID = e.DepartmentID
+GROUP BY d.DepartmentID, d.DepartmentName;
+CREATE VIEW SalaryHistoryView AS
+SELECT 
+    s.SalaryID, s.EmployeeID, CONCAT(e.FirstName, ' ', e.LastName) AS EmployeeName,
+    s.Amount, s.StartDate, s.EndDate
+FROM Salaries s
+JOIN Employees e ON s.EmployeeID = e.EmployeeID
+ORDER BY s.EmployeeID, s.StartDate DESC;
+commit;
