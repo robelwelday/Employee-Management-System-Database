@@ -59,4 +59,31 @@ BEGIN
 END$$
 DELIMITER ;
 commit;
+DELIMITER $$
+CREATE PROCEDURE AddRole(
+    IN role_title VARCHAR(100),
+    IN role_desc TEXT
+)
+BEGIN
+    INSERT INTO Roles (RoleTitle, Description)
+    VALUES (role_title, role_desc);
+END$$
+DELIMITER ;
+DELIMITER $$
+CREATE PROCEDURE UpdateEmployeeSalary(
+    IN emp_id INT,
+    IN new_amount DECIMAL(10,2),
+    IN start_date DATE
+)
+BEGIN
+    -- End previous salary if it exists
+    UPDATE Salaries
+    SET EndDate = start_date
+    WHERE EmployeeID = emp_id AND EndDate IS NULL;
 
+    -- Insert new salary record
+    INSERT INTO Salaries (EmployeeID, Amount, StartDate)
+    VALUES (emp_id, new_amount, start_date);
+END$$
+DELIMITER ;
+commit;
