@@ -1,7 +1,18 @@
 SET autocommit = 0;
 SET sql_safe_updates = 0;
-commit;
 create database Employee_Management_System_database;
+USE Employee_Management_System_database;
+commit;
+CREATE TABLE Departments (
+    DepartmentID SERIAL PRIMARY KEY,
+    DepartmentName VARCHAR(100) NOT NULL,
+    Location VARCHAR(100)
+);
+CREATE TABLE Roles (
+    RoleID SERIAL PRIMARY KEY,
+    RoleTitle VARCHAR(100) NOT NULL,
+    Description TEXT
+);
 CREATE TABLE Employees (
     EmployeeID SERIAL PRIMARY KEY,
     FirstName VARCHAR(50) NOT NULL,
@@ -13,16 +24,6 @@ CREATE TABLE Employees (
     RoleID INT NOT NULL,
     FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID),
     FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
-);
-CREATE TABLE Departments (
-    DepartmentID SERIAL PRIMARY KEY,
-    DepartmentName VARCHAR(100) NOT NULL,
-    Location VARCHAR(100)
-);
-CREATE TABLE Roles (
-    RoleID SERIAL PRIMARY KEY,
-    RoleTitle VARCHAR(100) NOT NULL,
-    Description TEXT
 );
 CREATE TABLE Salaries (
     SalaryID SERIAL PRIMARY KEY,
