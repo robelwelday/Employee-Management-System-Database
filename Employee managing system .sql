@@ -111,3 +111,8 @@ FROM Salaries s
 JOIN Employees e ON s.EmployeeID = e.EmployeeID
 ORDER BY s.EmployeeID, s.StartDate DESC;
 commit;
+CREATE INDEX idx_salaries_emp_end ON Salaries(EmployeeID, EndDate);
+CREATE INDEX idx_employees_department ON Employees(DepartmentID);
+CREATE INDEX idx_employees_role ON Employees(RoleID);
+commit;
+
